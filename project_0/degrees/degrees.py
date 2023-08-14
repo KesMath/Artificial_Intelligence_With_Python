@@ -91,9 +91,25 @@ def shortest_path(source, target):
 
     If no possible path, returns None.
     """
+    list = list()
+    queue = QueueFrontier()
 
-    # TODO
-    raise NotImplementedError
+    while not(queue.empty()):
+        neighbors = neighbors_for_person(source)
+        queue.add(neighbor for neighbor in neighbors)
+
+        node = queue.remove()
+        if node[0] == target[0] and node[1] == target[1]:
+            list.add(node)
+            break
+
+        else: # node is not target, hence we must explore all new options that can be reached from this node
+            #include business logic to explore 
+            pass
+
+    if len(list == 0):
+        return None
+    return list
 
 
 def person_id_for_name(name):
