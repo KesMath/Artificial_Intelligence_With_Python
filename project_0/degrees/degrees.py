@@ -91,25 +91,29 @@ def shortest_path(source, target):
 
     If no possible path, returns None.
     """
-    list = list()
-    queue = QueueFrontier()
+    path = list()
+    unvisited_queue = QueueFrontier()
+    visited_queue = list()
 
-    while not(queue.empty()):
-        neighbors = neighbors_for_person(source)
-        queue.add(neighbor for neighbor in neighbors)
+    neighbors = neighbors_for_person(source)
+    unvisited_queue.add(neighbor for neighbor in neighbors)
 
-        node = queue.remove()
+    while not(unvisited_queue.empty()):
+        node = unvisited_queue.remove()
         if node[0] == target[0] and node[1] == target[1]:
-            list.add(node)
+            path.add(node)
             break
+        else:
+            # node is not target, hence we must explore all new options that can be reached from this node
+            # TODO: must add some case logic to populate list as we must 'walk to shortest path'
+            # TODO: integrate visited_queue as well!
+            source = node
+            neighbors = neighbors_for_person(source)
+            unvisited_queue.add(neighbor for neighbor in neighbors)
 
-        else: # node is not target, hence we must explore all new options that can be reached from this node
-            #include business logic to explore 
-            pass
-
-    if len(list == 0):
+    if len(path == 0):
         return None
-    return list
+    return path
 
 
 def person_id_for_name(name):
