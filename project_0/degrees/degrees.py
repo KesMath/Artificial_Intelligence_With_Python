@@ -92,11 +92,10 @@ def shortest_path(source, target):
     If no possible path, returns None.
     """
     path = list()
-    unvisited_queue = QueueFrontier()
     visited_queue = list()
+    unvisited_queue = QueueFrontier()
 
-    neighbors = neighbors_for_person(source)
-    unvisited_queue.add(neighbor for neighbor in neighbors)
+    unvisited_queue.add(source)
 
     while not(unvisited_queue.empty()):
         node = unvisited_queue.remove()
@@ -107,9 +106,9 @@ def shortest_path(source, target):
             # node is not target, hence we must explore all new options that can be reached from this node
             # TODO: must add some case logic to populate list as we must 'walk to shortest path'
             # TODO: integrate visited_queue as well!
-            source = node
-            neighbors = neighbors_for_person(source)
+            neighbors = neighbors_for_person(node)
             unvisited_queue.add(neighbor for neighbor in neighbors)
+            visited_queue.add(node)
 
     if len(path == 0):
         return None
